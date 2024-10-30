@@ -1,0 +1,25 @@
+:root {
+  --navi-color: #36c500;
+  --spot-color: #ff9500;
+}
+
+html,
+body {
+  background: #000;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  height: 400px;
+}

@@ -1,0 +1,21 @@
+.lights {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.light {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--navi-color);
+  box-shadow: 0 0 20px 2px var(--navi-color);
+  margin: 0 5px;
+}
+
+.restaurant .light {
+  background-color: var(--spot-color);
+  box-shadow: 0 0 20px 2px var(--spot-color);
+}

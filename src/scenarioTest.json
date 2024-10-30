@@ -1,0 +1,32 @@
+{
+  "steps": [
+    {
+      "time": 5,
+      "direction": "right"
+    },
+    {
+      "time": 15,
+      "direction": "up"
+    },
+    {
+      "time": 25,
+      "direction": "left"
+    },
+    {
+      "time": 35,
+      "direction": "up"
+    },
+    {
+      "time": 45,
+      "direction": "rightTop"
+    },
+    {
+      "time": 55,
+      "direction": "leftTop"
+    },
+    {
+      "time": 65,
+      "direction": "restaurant"
+    }
+  ]
+}

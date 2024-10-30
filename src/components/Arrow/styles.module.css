@@ -1,0 +1,16 @@
+.arrow {
+  background-color: var(--navi-color);
+  box-shadow: 0 0 20px 2px var(--navi-color);
+  border-radius: 100%;
+  padding: 20px;
+}
+
+.restaurant {
+  background-color: var(--spot-color);
+  box-shadow: 0 0 20px 2px var(--spot-color);
+}
+
+.arrow img {
+  width: 100%;
+  height: 100%;
+}
