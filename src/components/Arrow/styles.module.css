@@ -10,6 +10,11 @@
   box-shadow: 0 0 20px 2px var(--spot-color);
 }
 
+.goal {
+  background-color: var(--goal-color);
+  box-shadow: 0 0 20px 2px var(--goal-color);
+}
+
 .arrow img {
   width: 100%;
   height: 100%;

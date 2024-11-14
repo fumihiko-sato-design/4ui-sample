@@ -1,32 +1,59 @@
 {
   "steps": [
     {
-      "time": 5,
-      "direction": "right"
+      "distance": 10,
+      "direction": "up",
+      "message": "しばらく直進です"
     },
     {
-      "time": 15,
-      "direction": "up"
+      "distance": 400,
+      "direction": "left",
+      "message": "100メートル先左です"
     },
     {
-      "time": 25,
-      "direction": "left"
+      "distance": 100,
+      "direction": "left",
+      "message": "左です"
     },
     {
-      "time": 35,
-      "direction": "up"
+      "distance": 10,
+      "direction": "right",
+      "message": "20メートル先右です"
     },
     {
-      "time": 45,
-      "direction": "rightTop"
+      "distance": 20,
+      "direction": "right",
+      "message": "右です"
     },
     {
-      "time": 55,
-      "direction": "leftTop"
+      "distance": 10,
+      "direction": "right",
+      "message": "すぐ右です"
     },
     {
-      "time": 65,
-      "direction": "restaurant"
+      "distance": 20,
+      "direction": "left",
+      "message": "20メートル先左です"
+    },
+    {
+      "distance": 20,
+      "direction": "left",
+      "message": "左です"
+    },
+    {
+      "distance": 10,
+      "direction": "up",
+      "message": "しばらく直進です"
+    },
+    {
+      "distance": 90,
+      "direction": "up",
+      "message": "50メートル先目的地です"
+    },
+    {
+      "distance": 100,
+      "direction": "goal",
+      "message": "目的地に到着しました"
     }
   ]
 }

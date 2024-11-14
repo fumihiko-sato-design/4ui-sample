@@ -4,4 +4,5 @@ export type directionType =
   | "rightTop"
   | "left"
   | "leftTop"
-  | "restaurant";
+  | "restaurant"
+  | "goal";
