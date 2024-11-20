@@ -1,6 +1,7 @@
 :root {
   --navi-color: #36c500;
   --spot-color: #ff9500;
+  --spot-color-lighten: #ffcb82;
   --goal-color: #00aeff;
 }
 
@@ -35,4 +36,9 @@ body {
 
 .startBox input[type="range"] {
   width: 200px;
+}
+
+.startBox .label {
+  color: #fff;
+  margin-right: 4px;
 }

@@ -1,59 +1,91 @@
 {
-  "steps": [
+  "scenario01": [
     {
       "distance": 10,
       "direction": "up",
-      "message": "しばらく直進です"
+      "message": "しばらく直進です",
+      "scenario": ""
+    },
+    {
+      "distance": 40,
+      "direction": "restaurant",
+      "message": "近くにおすすめスポットがあります。立寄りますか？",
+      "scenario": "scenario02"
     },
     {
       "distance": 400,
       "direction": "left",
-      "message": "100メートル先左です"
+      "message": "100メートル先左です",
+      "scenario": ""
     },
     {
       "distance": 100,
       "direction": "left",
-      "message": "左です"
+      "message": "左です",
+      "scenario": ""
     },
     {
       "distance": 10,
       "direction": "right",
-      "message": "20メートル先右です"
+      "message": "20メートル先右です",
+      "scenario": ""
     },
     {
       "distance": 20,
       "direction": "right",
-      "message": "右です"
+      "message": "右です",
+      "scenario": ""
     },
     {
       "distance": 10,
       "direction": "right",
-      "message": "すぐ右です"
+      "message": "すぐ右です",
+      "scenario": ""
     },
     {
       "distance": 20,
       "direction": "left",
-      "message": "20メートル先左です"
+      "message": "20メートル先左です",
+      "scenario": ""
     },
     {
       "distance": 20,
       "direction": "left",
-      "message": "左です"
+      "message": "左です",
+      "scenario": ""
     },
     {
       "distance": 10,
       "direction": "up",
-      "message": "しばらく直進です"
+      "message": "しばらく直進です",
+      "scenario": ""
     },
+
     {
-      "distance": 90,
+      "distance": 50,
       "direction": "up",
-      "message": "50メートル先目的地です"
+      "message": "50メートル先目的地です",
+      "scenario": ""
     },
     {
       "distance": 100,
       "direction": "goal",
-      "message": "目的地に到着しました"
+      "message": "目的地に到着しました",
+      "scenario": ""
+    }
+  ],
+  "scenario02": [
+    {
+      "distance": 0,
+      "direction": "up",
+      "message": "しばらく直進です",
+      "scenario": ""
+    },
+    {
+      "distance": 40,
+      "direction": "left",
+      "message": "BBBBBBBB",
+      "scenario": ""
     }
   ]
 }

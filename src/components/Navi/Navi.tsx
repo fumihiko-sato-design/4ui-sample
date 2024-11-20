@@ -2,15 +2,9 @@ import { useEffect, useState } from "react";
 import Light from "../Light/Light";
 import Arrow from "../Arrow/Arrow";
 import styles from "./styles.module.css";
-import scenarioTest from "../../scenarioTest.json";
 import { directionType } from "../../types/types";
 import { speech } from "../../utils/speech";
-
-type NaviProps = {
-  settings: {
-    perSecond: number;
-  };
-};
+import pushSound from "../../assets/sounds/push.mp3";
 
 type NaviDataType = {
   direction: string;
@@ -19,15 +13,34 @@ type NaviDataType = {
   spoken: boolean;
 };
 
-const Navi: React.FC<NaviProps> = ({ settings }) => {
-  const [direction, setDirection] = useState<directionType>();
-  // const [naviData, setNaviData] = useState<NaviDataType[]>([]);
+type ScenarioTestType = {
+  [key: string]: {
+    distance: number;
+    direction: string;
+    message: string;
+    scenario: string;
+  }[];
+};
+
+type NaviProps = {
+  settings: {
+    perSecond: number;
+  };
+  scenarioTest: ScenarioTestType;
+};
+
+const Navi: React.FC<NaviProps> = ({ settings, scenarioTest }) => {
+  const [directionData, setDirectionData] = useState<directionType>();
   const [isNear, setIsNear] = useState(false);
   const [currentTime, setCurrentTime] = useState(Date.now());
-  let currentNaviDataIndex = 0;
-  let naviData: NaviDataType[] = [];
+  const [currentScenarioKey, setCurrentScenarioKey] = useState("scenario01");
+  const [naviData, setNaviData] = useState<NaviDataType[]>([]);
+  const [scenarioDataStepIndex, setScenarioDataStepIndex] = useState(0);
+  const scenarioData: ScenarioTestType = scenarioTest;
+  let requestAnimationFrameId: number | null = null;
 
   const tick = () => {
+    let currentNaviDataIndex = 0;
     if (naviData.length === 0) return;
     const now = Date.now();
     setIsNear(naviData[currentNaviDataIndex].date - now < 10 * 1000);
@@ -36,48 +49,92 @@ const Navi: React.FC<NaviProps> = ({ settings }) => {
         currentNaviDataIndex = i + 1;
         data.spoken = true;
         speak(data);
+        setScenarioDataStepIndex(i);
       }
     });
-    window.requestAnimationFrame(tick);
+
+    if (requestAnimationFrameId) {
+      window.cancelAnimationFrame(requestAnimationFrameId);
+    }
+
+    requestAnimationFrameId = window.requestAnimationFrame(tick);
   };
 
   const speak = ({ direction, message }: NaviDataType) => {
-    setDirection(direction as directionType);
-    speech(message);
+    setDirectionData(direction as directionType);
+    let delayTime = 0;
+    if (direction === "restaurant") {
+      delayTime = 500;
+      playSound();
+    }
+    speech(message, delayTime);
+  };
+
+  const playSound = () => {
+    const audio = new Audio(pushSound);
+    audio.volume = 0.2;
+    audio.play();
+  };
+
+  const changeScenario = () => {
+    const key =
+      scenarioData[currentScenarioKey][scenarioDataStepIndex].scenario;
+
+    if (key) {
+      setCurrentTime(Date.now());
+      setCurrentScenarioKey(key);
+    }
   };
 
   const getNaviData = () => {
-    const distances = scenarioTest.steps.map((step) => step.distance);
-    return scenarioTest.steps.map(({ direction, message }, index) => {
-      const date =
-        distances
-          .slice(0, index + 1)
-          .reduce(
-            (previousValue, currentValue) => previousValue + currentValue,
-            0
-          ) / settings.perSecond;
+    console.log(new Date(currentTime));
+    const distances = scenarioData[currentScenarioKey].map(
+      (step) => step.distance
+    );
+    return scenarioData[currentScenarioKey].map(
+      ({ direction, message }, index) => {
+        const date =
+          distances
+            .slice(0, index + 1)
+            .reduce(
+              (previousValue, currentValue) => previousValue + currentValue,
+              0
+            ) / settings.perSecond;
 
-      return {
-        direction,
-        message,
-        date: currentTime + date * 1000,
-        spoken: false,
-      };
-    });
+        return {
+          direction,
+          message,
+          date: currentTime + date * 1000,
+          spoken: false,
+        };
+      }
+    );
   };
 
-  naviData = getNaviData();
+  useEffect(() => {
+    const data = getNaviData();
+    setNaviData(data);
+  }, [currentScenarioKey]);
 
   useEffect(() => {
     tick();
-    return () => {};
-  }, []);
+    return () => {
+      if (requestAnimationFrameId) {
+        window.cancelAnimationFrame(requestAnimationFrameId);
+      }
+    };
+  }, [naviData]);
 
   return (
     <div className={styles.navi}>
-      <Light direction={direction} isNear={isNear} />
-      <Arrow direction={direction} />
-      <button className={styles.button} />
+      <Light direction={directionData} isNear={isNear} />
+      <Arrow direction={directionData} />
+      <button
+        className={`${styles.button} ${
+          directionData === "restaurant" ? styles.spot : ""
+        }`}
+        onClick={changeScenario}
+      />
     </div>
   );
 };

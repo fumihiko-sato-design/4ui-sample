@@ -14,3 +14,20 @@
   border-radius: 100px;
   border: 1px solid #555555;
 }
+
+.button.spot {
+  background: linear-gradient(
+    125deg,
+    var(--spot-color-lighten),
+    var(--spot-color)
+  );
+  border: 2px solid var(--spot-color-lighten);
+}
+
+.button:focus {
+  outline: 0;
+}
+
+.button:hover {
+  outline: 0;
+}

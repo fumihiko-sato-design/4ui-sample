@@ -1,7 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import Navi from "./components/Navi/Navi";
-import { directionType } from "./types/types";
+
+type ScenarioTestType = {
+  [key: string]: {
+    distance: number;
+    direction: string;
+    message: string;
+    scenario: string;
+  }[];
+};
 
 function App() {
   const [settings, setSettings] = useState<{ perSecond: number }>({
@@ -9,6 +17,14 @@ function App() {
     perSecond: 4.17,
   });
   const [isStart, setIsStart] = useState(false);
+  const [scenarioTest, setScenarioTest] = useState<ScenarioTestType>({});
+
+  useEffect(() => {
+    import("./scenarioTest.json").then((data) => {
+      setScenarioTest(data.default);
+    });
+  }, []);
+
   const start = () => {
     setIsStart(true);
   };
@@ -16,8 +32,8 @@ function App() {
   return (
     <>
       <div className="wrapper">
-        {isStart ? (
-          <Navi settings={settings} />
+        {isStart && scenarioTest ? (
+          <Navi settings={settings} scenarioTest={scenarioTest} />
         ) : (
           <>
             <div className="startBox">
@@ -25,6 +41,7 @@ function App() {
                 <button onClick={start}>スタート</button>
               </div>
               <div>
+                <span className="label">速度</span>
                 <input
                   value={settings.perSecond}
                   type="range"

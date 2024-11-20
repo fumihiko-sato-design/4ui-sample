@@ -7,7 +7,6 @@ import left from "../../assets/arrows/p10008_day.svg";
 import restaurant from "../../assets/restaurant.svg";
 import goal from "../../assets/goal.png";
 import styles from "./styles.module.css";
-import { speech } from "../../utils/speech";
 import { directionType } from "../../types/types";
 
 interface ArrowProps {
