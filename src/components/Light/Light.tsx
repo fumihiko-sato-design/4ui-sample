@@ -13,7 +13,7 @@ type LightProps = {
 
 const Light: React.FC<LightProps> = ({ direction, isNear }) => {
   const lights = useRef<HTMLDivElement>(null);
-  const [lightItemLength, setLightItemLength] = useState(7);
+  const [lightItemLength] = useState(7);
 
   useEffect(() => {
     const elements: HTMLCollection | undefined = lights.current?.children;

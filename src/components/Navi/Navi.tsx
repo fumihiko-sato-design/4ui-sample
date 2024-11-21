@@ -11,6 +11,7 @@ type NaviDataType = {
   message: string;
   date: number;
   spoken: boolean;
+  delayTime?: number;
 };
 
 type ScenarioTestType = {
@@ -19,6 +20,7 @@ type ScenarioTestType = {
     direction: string;
     message: string;
     scenario: string;
+    delayTime?: number;
   }[];
 };
 
@@ -60,13 +62,12 @@ const Navi: React.FC<NaviProps> = ({ settings, scenarioTest }) => {
     requestAnimationFrameId = window.requestAnimationFrame(tick);
   };
 
-  const speak = ({ direction, message }: NaviDataType) => {
+  const speak = ({ direction, message, delayTime }: NaviDataType) => {
     setDirectionData(direction as directionType);
-    let delayTime = 0;
     if (direction === "restaurant") {
-      delayTime = 500;
       playSound();
     }
+
     speech(message, delayTime);
   };
 
@@ -87,12 +88,11 @@ const Navi: React.FC<NaviProps> = ({ settings, scenarioTest }) => {
   };
 
   const getNaviData = () => {
-    console.log(new Date(currentTime));
     const distances = scenarioData[currentScenarioKey].map(
       (step) => step.distance
     );
     return scenarioData[currentScenarioKey].map(
-      ({ direction, message }, index) => {
+      ({ direction, message, delayTime }, index) => {
         const date =
           distances
             .slice(0, index + 1)
@@ -106,6 +106,7 @@ const Navi: React.FC<NaviProps> = ({ settings, scenarioTest }) => {
           message,
           date: currentTime + date * 1000,
           spoken: false,
+          delayTime,
         };
       }
     );

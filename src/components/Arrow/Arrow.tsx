@@ -39,7 +39,13 @@ const Arrow: React.FC<ArrowProps> = ({ direction }) => {
 
   return (
     <div className={`${styles.arrow} ${direction ? styles[direction] : ""}`}>
-      <img src={getArrowPath()} alt="Arrow" />
+      {direction !== "loading" ? (
+        <img src={getArrowPath()} alt="Arrow" />
+      ) : (
+        <div className="spinnerWrapper">
+          <div className="spinner"></div>
+        </div>
+      )}
     </div>
   );
 };

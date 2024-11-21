@@ -5,4 +5,5 @@ export type directionType =
   | "left"
   | "leftTop"
   | "restaurant"
-  | "goal";
+  | "goal"
+  | "loading";
