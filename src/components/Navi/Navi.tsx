@@ -12,6 +12,7 @@ type NaviDataType = {
   date: number;
   spoken: boolean;
   delayTime?: number;
+  distance: number;
 };
 
 type ScenarioTestType = {
@@ -41,17 +42,40 @@ const Navi: React.FC<NaviProps> = ({ settings, scenarioTest }) => {
   const scenarioData: ScenarioTestType = scenarioTest;
   let requestAnimationFrameId: number | null = null;
 
-  const tick = () => {
-    let currentNaviDataIndex = 0;
+  let currentNaviDataIndex = 0;
+  let isNearSpoken = false;
+
+  const tick = async() =>  {
     if (naviData.length === 0) return;
     const now = Date.now();
-    setIsNear(naviData[currentNaviDataIndex].date - now < 10 * 1000);
+    const nextData = naviData[currentNaviDataIndex];
+    if (nextData.date - now < 10 * 1000) {
+      setIsNear(true);
+
+      if (
+        !nextData.spoken &&
+        nextData.direction !== "restaurant" &&
+        nextData.direction !== "goal" &&
+        nextData.direction !== "loading" &&
+        nextData.direction !== "up" &&
+        isNearSpoken === false &&
+        nextData.distance > 30
+      ) {
+        const data = JSON.parse(JSON.stringify(nextData));
+        data.message = "まもなく" + data.message;
+        isNearSpoken = true;
+        speak(data);
+      }
+    }
+
     naviData.forEach((data, i) => {
       if (data.date < now && !data.spoken) {
         currentNaviDataIndex = i + 1;
         data.spoken = true;
         speak(data);
         setScenarioDataStepIndex(i);
+        setIsNear(false);
+        isNearSpoken = false;
       }
     });
 
@@ -68,7 +92,7 @@ const Navi: React.FC<NaviProps> = ({ settings, scenarioTest }) => {
       playSound();
     }
 
-    speech(message, delayTime);
+    return speech(message, delayTime);
   };
 
   const playSound = () => {
@@ -84,6 +108,7 @@ const Navi: React.FC<NaviProps> = ({ settings, scenarioTest }) => {
     if (key) {
       setCurrentTime(Date.now());
       setCurrentScenarioKey(key);
+      currentNaviDataIndex = 0;
     }
   };
 
@@ -92,7 +117,7 @@ const Navi: React.FC<NaviProps> = ({ settings, scenarioTest }) => {
       (step) => step.distance
     );
     return scenarioData[currentScenarioKey].map(
-      ({ direction, message, delayTime }, index) => {
+      ({ direction, message, delayTime, distance }, index) => {
         const date =
           distances
             .slice(0, index + 1)
@@ -107,6 +132,7 @@ const Navi: React.FC<NaviProps> = ({ settings, scenarioTest }) => {
           date: currentTime + date * 1000,
           spoken: false,
           delayTime,
+          distance,
         };
       }
     );

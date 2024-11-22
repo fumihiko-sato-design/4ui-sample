@@ -39,7 +39,6 @@ const Light: React.FC<LightProps> = ({ direction, isNear }) => {
         default:
           break;
       }
-      console.log("delay", isNear);
       gsap.to(element, {
         duration: isNear ? 0.5 : 1.5,
         repeat: -1,

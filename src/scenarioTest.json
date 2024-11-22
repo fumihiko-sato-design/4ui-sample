@@ -10,7 +10,7 @@
     {
       "distance": 10,
       "direction": "up",
-      "message": "東チューオーコーエンに向かいます。しばらく直進です",
+      "message": "東チューオーコーエンに向かいますしばらく直進です",
       "delayTime": 1000,
       "scenario": ""
     },
@@ -27,7 +27,14 @@
       "scenario": ""
     },
     {
-      "distance": 70,
+      "distance": 10,
+      "direction": "up",
+      "message": "",
+      "delayTime": 0,
+      "scenario": ""
+    },
+    {
+      "distance": 60,
       "direction": "right",
       "message": "右です",
       "scenario": ""
@@ -39,25 +46,53 @@
       "scenario": ""
     },
     {
-      "distance": 40,
+      "distance": 10,
+      "direction": "up",
+      "message": "",
+      "delayTime": 0,
+      "scenario": ""
+    },
+    {
+      "distance": 30,
       "direction": "left",
       "message": "左です",
       "scenario": ""
     },
     {
-      "distance": 110,
+      "distance": 10,
+      "direction": "up",
+      "message": "",
+      "delayTime": 0,
+      "scenario": ""
+    },
+    {
+      "distance": 100,
       "direction": "left",
       "message": "左です",
       "scenario": ""
     },
     {
-      "distance": 110,
+      "distance": 10,
+      "direction": "up",
+      "message": "",
+      "delayTime": 0,
+      "scenario": ""
+    },
+    {
+      "distance": 100,
       "direction": "right",
       "message": "右です",
       "scenario": ""
     },
     {
-      "distance": 140,
+      "distance": 10,
+      "direction": "up",
+      "message": "",
+      "delayTime": 0,
+      "scenario": ""
+    },
+    {
+      "distance": 130,
       "direction": "left",
       "message": "左です",
       "scenario": ""

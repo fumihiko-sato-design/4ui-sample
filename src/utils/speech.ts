@@ -1,9 +1,23 @@
-export function speech(text: string, delay: number = 0) {
-  console.log("speech", text, delay);
-  const ssu = new SpeechSynthesisUtterance();
-  ssu.text = text;
-  ssu.lang = "ja-JP";
-  setTimeout(() => {
-    speechSynthesis.speak(ssu);
-  }, delay);
+export function speech(text: string, delay: number = 0): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const ssu = new SpeechSynthesisUtterance();
+    ssu.text = text;
+    ssu.lang = "ja-JP";
+
+    // 発話の完了イベント
+    ssu.onend = (event) => {
+      console.log("発話が完了しました:", event);
+      resolve();
+    };
+
+    // 発話のエラーハンドリング
+    ssu.onerror = (event) => {
+      console.error("発話中にエラーが発生しました:", event);
+      reject(event);
+    };
+
+    setTimeout(() => {
+      speechSynthesis.speak(ssu);
+    }, delay);
+  });
 }
