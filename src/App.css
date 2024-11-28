@@ -41,6 +41,8 @@ body {
 .startBox .label {
   color: #fff;
   margin-right: 4px;
+  width: 80px;
+  display: inline-block;
 }
 
 .spinnerWrapper {

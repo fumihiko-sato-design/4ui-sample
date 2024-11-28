@@ -10,7 +10,7 @@
     {
       "distance": 10,
       "direction": "up",
-      "message": "東チューオーコーエンに向かいますしばらく直進です",
+      "message": "東なかさとコーエンに向かいますしばらく直進です",
       "delayTime": 1000,
       "scenario": ""
     },
@@ -92,7 +92,14 @@
       "scenario": ""
     },
     {
-      "distance": 130,
+      "distance": 30,
+      "direction": "restaurant",
+      "message": "おすすめのレストランがあります。立寄りますか？",
+      "delayTime": 0,
+      "scenario": ""
+    },
+    {
+      "distance": 100,
       "direction": "left",
       "message": "左です",
       "scenario": ""

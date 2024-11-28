@@ -41,7 +41,7 @@ function App() {
                 <button onClick={start}>スタート</button>
               </div>
               <div>
-                <span className="label">速度</span>
+                <span className="label">速度:{settings.perSecond}</span>
                 <input
                   value={settings.perSecond}
                   type="range"
