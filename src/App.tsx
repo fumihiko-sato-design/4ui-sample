@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import Navi from "./components/Navi/Navi";
+import { speech } from "./utils/speech";
 
 type ScenarioTestType = {
   [key: string]: {
@@ -27,6 +28,7 @@ function App() {
 
   const start = () => {
     setIsStart(true);
+    speech("ナビゲーションを開始します");
   };
 
   return (

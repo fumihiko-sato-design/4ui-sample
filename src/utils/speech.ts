@@ -17,6 +17,7 @@ export function speech(text: string, delay: number = 0): Promise<void> {
     };
 
     setTimeout(() => {
+      console.log("発話を開始します");
       speechSynthesis.speak(ssu);
     }, delay);
   });
