@@ -61,7 +61,7 @@ const DirectionNavi: React.FC = () => {
     // event.alpha: デバイスの方位（0-360度）0が北、90が東、180が南、270が西
     const alpha = event.alpha;
     if (alpha !== null) {
-      setDeviceOrientation(alpha);
+      setDeviceOrientation(Math.round(alpha));
     }
   };
 
@@ -75,13 +75,13 @@ const DirectionNavi: React.FC = () => {
 
   setInterval(() => {
     getPosition();
-  }, 500);
+  }, 1000);
 
   return (
     <div className={styles.navi}>
       {bearing}
       {deviceOrientation !== null && (
-        <div>デバイスの向き: {deviceOrientation.toFixed(2)}度</div>
+        <div>デバイスの向き: {deviceOrientation}度</div>
       )}
       <div
         className={styles.naviWrapper}
