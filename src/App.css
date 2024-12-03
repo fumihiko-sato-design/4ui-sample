@@ -71,3 +71,12 @@ body {
     transform: rotate(1turn);
   }
 }
+
+.buttons {
+  display: flex;
+  gap: 20px;
+}
+
+.button {
+  background: #fff;
+}

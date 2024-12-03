@@ -53,7 +53,7 @@ function App() {
         ) : (
           <>
             <div className="startBox">
-              <div>
+              <div className="buttons">
                 <button
                   onClick={() => {
                     start("arrow");
