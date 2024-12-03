@@ -38,27 +38,9 @@ const DirectionNavi: React.FC = () => {
     );
   };
 
-  // 2点間の方角を計算
-  function calculateBearing(
-    lat1: number,
-    lon1: number,
-    lat2: number,
-    lon2: number
-  ): number {
-    const toRadians = (degree: number) => degree * (Math.PI / 180);
-    const toDegrees = (radian: number) => radian * (180 / Math.PI);
-
-    const φ1 = toRadians(lat1);
-    const φ2 = toRadians(lat2);
-    const Δλ = toRadians(lon2 - lon1);
-
-    const y = Math.sin(Δλ) * Math.cos(φ2);
-    const x =
-      Math.cos(φ1) * Math.sin(φ2) - Math.sin(φ1) * Math.cos(φ2) * Math.cos(Δλ);
-    const θ = Math.atan2(y, x);
-
-    return (toDegrees(θ) + 360) % 360; // 方角を0-360度の範囲に正規化
-  }
+  useEffect(() => {
+    getPosition();
+  }, []);
 
   const handleOrientation = throttle((event: DeviceOrientationEvent) => {
     // event.alpha: デバイスの方位（0-360度）0が北、90が東、180が南、270が西
@@ -76,21 +58,23 @@ const DirectionNavi: React.FC = () => {
     };
   }, []);
 
-  setInterval(() => {
-    getPosition();
-  }, 1000);
+  // setInterval(() => {
+  //   getPosition();
+  // }, 1000);
 
   return (
     <div className={styles.navi}>
       {deviceOrientation !== null && (
         <div>
-          向き: {bearing}度 | {deviceOrientation}　|
+          向き: {bearing}度 | {deviceOrientation}|
           {Math.round((bearing - deviceOrientation + 360) % 360)}
         </div>
       )}
       <div
         className={styles.naviWrapper}
-        style={{ transform: `rotate(${Math.round((bearing - deviceOrientation! + 360) % 360)}deg)` }}
+        style={{
+          transform: `rotate(${deviceOrientation}deg)`,
+        }}
       >
         <Light isNear={false} naviType="direction" />
         <Arrow direction="simpleArrow" />
@@ -100,5 +84,27 @@ const DirectionNavi: React.FC = () => {
     </div>
   );
 };
+
+// 2点間の方角を計算
+function calculateBearing(
+  lat1: number,
+  lon1: number,
+  lat2: number,
+  lon2: number
+): number {
+  const toRadians = (degree: number) => degree * (Math.PI / 180);
+  const toDegrees = (radian: number) => radian * (180 / Math.PI);
+
+  const φ1 = toRadians(lat1);
+  const φ2 = toRadians(lat2);
+  const Δλ = toRadians(lon2 - lon1);
+
+  const y = Math.sin(Δλ) * Math.cos(φ2);
+  const x =
+    Math.cos(φ1) * Math.sin(φ2) - Math.sin(φ1) * Math.cos(φ2) * Math.cos(Δλ);
+  const θ = Math.atan2(y, x);
+
+  return (toDegrees(θ) + 360) % 360; // 方角を0-360度の範囲に正規化
+}
 
 export default DirectionNavi;
