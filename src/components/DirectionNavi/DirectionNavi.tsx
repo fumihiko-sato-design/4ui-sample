@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { throttle } from "lodash";
 
 import styles from "./styles.module.css";
 import Arrow from "../Arrow/Arrow";
@@ -57,13 +58,13 @@ const DirectionNavi: React.FC = () => {
     return (toDegrees(θ) + 360) % 360; // 方角を0-360度の範囲に正規化
   }
 
-  const handleOrientation = (event: DeviceOrientationEvent) => {
+  const handleOrientation = throttle((event: DeviceOrientationEvent) => {
     // event.alpha: デバイスの方位（0-360度）0が北、90が東、180が南、270が西
     const alpha = event.alpha;
     if (alpha !== null) {
       setDeviceOrientation(Math.round(alpha));
     }
-  };
+  }, 100);
 
   useEffect(() => {
     window.addEventListener("deviceorientation", handleOrientation);
