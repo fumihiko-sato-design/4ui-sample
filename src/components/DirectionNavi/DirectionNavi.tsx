@@ -22,7 +22,12 @@ const DirectionNavi: React.FC = () => {
           destination.lat,
           destination.lon
         );
-        setBearing(bearing);
+
+        // デバイスの向きと目的地の方角の差を計算
+        const goalBearing = deviceOrientation
+          ? (bearing - deviceOrientation + 360) % 360
+          : 0;
+        setBearing(goalBearing);
       },
       (error) => {
         console.log(error);
@@ -53,7 +58,8 @@ const DirectionNavi: React.FC = () => {
   }
 
   const handleOrientation = (event: DeviceOrientationEvent) => {
-    const alpha = event.alpha; // デバイスの方位（0-360度）
+    // event.alpha: デバイスの方位（0-360度）0が北、90が東、180が南、270が西
+    const alpha = event.alpha;
     if (alpha !== null) {
       setDeviceOrientation(alpha);
     }
