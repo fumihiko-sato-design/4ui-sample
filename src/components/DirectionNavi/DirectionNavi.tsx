@@ -1,15 +1,12 @@
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { throttle } from "lodash";
-
 import styles from "./styles.module.css";
 import Arrow from "../Arrow/Arrow";
 import Light from "../Light/Light";
 
 const DirectionNavi: React.FC = () => {
   const [bearing, setBearing] = useState<number>(0);
-  // const destination = { lat: 35.65856, lon: 139.745461 }; // 目的地の緯度経度（例: 東京タワー）
-  const destination = { lat: 35.654649, lon: 138.611154 }; // 目的地の緯度経度（例: 山梨）
-
+  const destination = { lat: 35.6895, lon: 139.6917 }; // 目的地の緯度経度（例: 東京）
   const [deviceOrientation, setDeviceOrientation] = useState<number | null>(
     null
   );
@@ -25,15 +22,10 @@ const DirectionNavi: React.FC = () => {
           destination.lat,
           destination.lon
         );
-
-        // デバイスの向きと目的地の方角の差を計算
-        // const goalBearing = deviceOrientation
-        //   ? Math.round((bearing - deviceOrientation + 360) % 360)
-        //   : 0;
         setBearing(bearing);
       },
       (error) => {
-        console.log(error);
+        console.error(error);
       }
     );
   };
@@ -43,12 +35,11 @@ const DirectionNavi: React.FC = () => {
   }, []);
 
   const handleOrientation = throttle((event: DeviceOrientationEvent) => {
-    // event.alpha: デバイスの方位（0-360度）0が北、90が東、180が南、270が西
-    const alpha = event.alpha;
+    const alpha = event.alpha; // デバイスの方位（0-360度）
     if (alpha !== null) {
-      setDeviceOrientation(Math.round(alpha));
+      setDeviceOrientation(alpha);
     }
-  }, 100);
+  }, 100); // 100msごとに実行
 
   useEffect(() => {
     window.addEventListener("deviceorientation", handleOrientation);
@@ -58,22 +49,28 @@ const DirectionNavi: React.FC = () => {
     };
   }, []);
 
-  // setInterval(() => {
-  //   getPosition();
-  // }, 1000);
+  // デバイスの向きと目的地の方角の差を計算
+  const calculateDirection = () => {
+    if (deviceOrientation !== null) {
+      const direction = (bearing - deviceOrientation + 360) % 360;
+      return direction;
+    }
+    return 0;
+  };
+
+  const direction = calculateDirection();
 
   return (
     <div className={styles.navi}>
       {deviceOrientation !== null && (
         <div>
-          向き: {bearing}度 | {deviceOrientation}|
-          {Math.round((bearing - deviceOrientation + 360) % 360)}
+          向き: {bearing}度 | {deviceOrientation}度 | {Math.round(direction)}度
         </div>
       )}
       <div
         className={styles.naviWrapper}
         style={{
-          transform: `rotate(${deviceOrientation}deg)`,
+          transform: `rotate(${Math.round(direction)}deg)`,
         }}
       >
         <Light isNear={false} naviType="direction" />
@@ -85,7 +82,7 @@ const DirectionNavi: React.FC = () => {
   );
 };
 
-// 2点間の方角を計算
+// 方角の計算関数
 function calculateBearing(
   lat1: number,
   lon1: number,
