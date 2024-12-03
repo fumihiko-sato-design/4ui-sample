@@ -69,10 +69,10 @@ const DirectionNavi: React.FC = () => {
   }, 1000);
 
   useEffect(() => {
-    window.addEventListener("deviceorientationabsolute", handleOrientation);
+    window.addEventListener("deviceorientation", handleOrientation);
 
     return () => {
-      window.removeEventListener("deviceorientationabsolute", handleOrientation);
+      window.removeEventListener("deviceorientation", handleOrientation);
     };
   }, []);
 
@@ -84,7 +84,8 @@ const DirectionNavi: React.FC = () => {
     <div className={styles.navi}>
       {deviceOrientation !== null && (
         <div>
-          向き: {bearing}度 | {deviceOrientation}
+          向き: {bearing}度 | {deviceOrientation}　|
+          {Math.round((bearing - deviceOrientation + 360) % 360)}
         </div>
       )}
       <div
