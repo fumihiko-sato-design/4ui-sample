@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import styles from "./styles.module.css";
 import Arrow from "../Arrow/Arrow";
+import Light from "../Light/Light";
 
 const DirectionNavi: React.FC = () => {
   const [bearing, setBearing] = useState<number>(0);
@@ -48,12 +49,24 @@ const DirectionNavi: React.FC = () => {
     return (toDegrees(θ) + 360) % 360; // 方角を0-360度の範囲に正規化
   }
 
-  useEffect(() => {
+  useEffect(() => {}, []);
+
+  setInterval(() => {
     getPosition();
-  }, []);
+  }, 500);
+
   return (
-    <div className={styles.container}>
-      <Arrow bearing={bearing} />
+    <div className={styles.navi}>
+      {bearing}
+      <div
+        className={styles.naviWrapper}
+        style={{ transform: `rotate(${bearing}deg)` }}
+      >
+        <Light isNear={false} naviType="direction" />
+        <Arrow direction="simpleArrow" />
+      </div>
+
+      <button onClick={() => console.log("ok")} className={styles.button} />
     </div>
   );
 };

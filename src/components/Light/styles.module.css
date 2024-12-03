@@ -1,8 +1,10 @@
 /* .lights {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -50%);
 } */
 
 .light {

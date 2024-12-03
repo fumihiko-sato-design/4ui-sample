@@ -7,17 +7,24 @@ import { directionType } from "../../types/types";
 type LightProps = {
   direction?: directionType;
   isNear: boolean;
+  naviType?: string;
+
   // isOn: boolean;
   // toggleLight: () => void;
 };
 
-const Light: React.FC<LightProps> = ({ direction, isNear }) => {
+const Light: React.FC<LightProps> = ({ direction, isNear, naviType }) => {
   const lights = useRef<HTMLDivElement>(null);
-  const [lightItemLength] = useState(7);
+  const [lightItemLength, setLightItemLength] = useState(7);
 
   useEffect(() => {
     const elements: HTMLCollection | undefined = lights.current?.children;
     if (!elements) return;
+
+    if (naviType === "direction") {
+      setLightItemLength(3);
+    }
+
     [...elements].forEach((element, index) => {
       let delay = 0;
       const coefficient = isNear ? 0.12 : 0.3;
@@ -62,11 +69,14 @@ const Light: React.FC<LightProps> = ({ direction, isNear }) => {
       className={`${styles.lights} ${direction ? styles[direction] : ""}`}
     >
       {[...Array(lightItemLength)].map((_, i) => {
+        const r = naviType !== "direction" ? Math.PI * 0.75 : Math.PI * 0.25;
         // TODO 謎の数値1.14をなんとかする
-        const radian =
-          (i / (lightItemLength - 1)) * (Math.PI * 0.75) + Math.PI * 1.14;
-        const left = Math.cos(radian) * 100 + 52;
-        const top = Math.sin(radian) * 100 + 85;
+        const threshold =
+          naviType !== "direction" ? Math.PI * 1.14 : Math.PI * 1.37;
+        const space = naviType !== "direction" ? 100 : 120;
+        const radian = (i / (lightItemLength - 1)) * r + threshold;
+        const left = Math.cos(radian) * space + 52;
+        const top = Math.sin(radian) * space + 85;
 
         return (
           <span

@@ -7,6 +7,13 @@
   position: relative;
 }
 
+.naviWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .button {
   background: linear-gradient(125deg, #575757, #212121);
   width: 50px;

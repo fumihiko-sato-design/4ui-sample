@@ -6,4 +6,5 @@ export type directionType =
   | "leftTop"
   | "restaurant"
   | "goal"
-  | "loading";
+  | "loading"
+  | "simpleArrow";
