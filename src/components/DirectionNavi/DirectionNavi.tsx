@@ -48,7 +48,7 @@ const DirectionNavi: React.FC = () => {
     if (alpha !== null) {
       setDeviceOrientation(Math.round(alpha));
     }
-  }, 1000);
+  }, 100);
 
   useEffect(() => {
     window.addEventListener("deviceorientation", handleOrientation);
