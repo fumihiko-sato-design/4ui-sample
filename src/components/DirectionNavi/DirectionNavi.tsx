@@ -7,6 +7,9 @@ import Light from "../Light/Light";
 const DirectionNavi: React.FC = () => {
   const [bearing, setBearing] = useState<number>(0);
   const destination = { lat: 35.6895, lon: 139.6917 }; // 目的地の緯度経度（例: 東京）
+  const [deviceOrientation, setDeviceOrientation] = useState<number | null>(
+    null
+  );
 
   // 現在位置の取得
   const getPosition = () => {
@@ -49,7 +52,20 @@ const DirectionNavi: React.FC = () => {
     return (toDegrees(θ) + 360) % 360; // 方角を0-360度の範囲に正規化
   }
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const handleOrientation = (event: DeviceOrientationEvent) => {
+      const alpha = event.alpha; // デバイスの方位（0-360度）
+      if (alpha !== null) {
+        setDeviceOrientation(alpha);
+      }
+    };
+
+    window.addEventListener("deviceorientation", handleOrientation);
+
+    return () => {
+      window.removeEventListener("deviceorientation", handleOrientation);
+    };
+  }, []);
 
   setInterval(() => {
     getPosition();
@@ -58,6 +74,9 @@ const DirectionNavi: React.FC = () => {
   return (
     <div className={styles.navi}>
       {bearing}
+      {deviceOrientation !== null && (
+        <div>デバイスの向き: {deviceOrientation.toFixed(2)}度</div>
+      )}
       <div
         className={styles.naviWrapper}
         style={{ transform: `rotate(${bearing}deg)` }}
