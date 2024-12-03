@@ -52,15 +52,18 @@ const DirectionNavi: React.FC = () => {
     return (toDegrees(θ) + 360) % 360; // 方角を0-360度の範囲に正規化
   }
 
-  useEffect(() => {
-    const handleOrientation = (event: DeviceOrientationEvent) => {
-      const alpha = event.alpha; // デバイスの方位（0-360度）
-      if (alpha !== null) {
-        setDeviceOrientation(alpha);
-      }
-    };
+  const handleOrientation = (event: DeviceOrientationEvent) => {
+    const alpha = event.alpha; // デバイスの方位（0-360度）
+    alert(alpha);
+    if (alpha !== null) {
+      setDeviceOrientation(alpha);
+    }
+  };
 
-    window.addEventListener("deviceorientation", handleOrientation);
+  useEffect(() => {
+    window.addEventListener("deviceorientation", () => {
+      alert("ok");
+    });
 
     return () => {
       window.removeEventListener("deviceorientation", handleOrientation);
