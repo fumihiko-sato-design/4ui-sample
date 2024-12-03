@@ -61,9 +61,7 @@ const DirectionNavi: React.FC = () => {
   };
 
   useEffect(() => {
-    window.addEventListener("deviceorientation", () => {
-      alert("ok");
-    });
+    window.addEventListener("deviceorientation", handleOrientation);
 
     return () => {
       window.removeEventListener("deviceorientation", handleOrientation);
