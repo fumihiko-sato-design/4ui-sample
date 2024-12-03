@@ -54,7 +54,6 @@ const DirectionNavi: React.FC = () => {
 
   const handleOrientation = (event: DeviceOrientationEvent) => {
     const alpha = event.alpha; // デバイスの方位（0-360度）
-    alert(alpha);
     if (alpha !== null) {
       setDeviceOrientation(alpha);
     }
