@@ -25,10 +25,10 @@ const DirectionNavi: React.FC = () => {
         );
 
         // デバイスの向きと目的地の方角の差を計算
-        const goalBearing = deviceOrientation
-          ? Math.round((bearing - deviceOrientation + 360) % 360)
-          : 0;
-        setBearing(goalBearing);
+        // const goalBearing = deviceOrientation
+        //   ? Math.round((bearing - deviceOrientation + 360) % 360)
+        //   : 0;
+        setBearing(bearing);
       },
       (error) => {
         console.log(error);
