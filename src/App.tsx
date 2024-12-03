@@ -28,7 +28,8 @@ function App() {
 
   const start = () => {
     setIsStart(true);
-    speech("ナビゲーションを開始します");
+    // これを入れないとiOSで音声が再生されない
+    speech("案内を開始します");
   };
 
   return (
