@@ -90,7 +90,7 @@ const DirectionNavi: React.FC = () => {
       )}
       <div
         className={styles.naviWrapper}
-        style={{ transform: `rotate(${bearing}deg)` }}
+        style={{ transform: `rotate(${Math.round((bearing - deviceOrientation! + 360) % 360)}deg)` }}
       >
         <Light isNear={false} naviType="direction" />
         <Arrow direction="simpleArrow" />
