@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import Navi from "./components/Navi/Navi";
 import { speech } from "./utils/speech";
+import DirectionNavi from "./components/DirectionNavi/DirectionNavi";
 
 type ScenarioTestType = {
   [key: string]: {
@@ -12,13 +13,17 @@ type ScenarioTestType = {
   }[];
 };
 
+type NaviType = "arrow" | "direction";
+
 function App() {
   const [settings, setSettings] = useState<{ perSecond: number }>({
     // 4.17m/s = 15km/h(自転車の速度)
     perSecond: 4.17,
   });
   const [isStart, setIsStart] = useState(false);
+  const [naviType, setNaviType] = useState<NaviType>("arrow");
   const [scenarioTest, setScenarioTest] = useState<ScenarioTestType>({});
+
 
   useEffect(() => {
     import("./scenarioTest.json").then((data) => {
@@ -26,7 +31,9 @@ function App() {
     });
   }, []);
 
-  const start = () => {
+
+  const start = (naviType: NaviType) => {
+    setNaviType(naviType);
     setIsStart(true);
     // これを入れないとiOSで音声が再生されない
     speech("案内を開始します");
@@ -36,12 +43,31 @@ function App() {
     <>
       <div className="wrapper">
         {isStart && scenarioTest ? (
-          <Navi settings={settings} scenarioTest={scenarioTest} />
+          <>
+            {naviType === "arrow" ? (
+              <Navi settings={settings} scenarioTest={scenarioTest} />
+            ) : (
+              <DirectionNavi />
+            )}
+          </>
         ) : (
           <>
             <div className="startBox">
               <div>
-                <button onClick={start}>スタート</button>
+                <button
+                  onClick={() => {
+                    start("arrow");
+                  }}
+                >
+                  スタート
+                </button>
+                <button
+                  onClick={() => {
+                    start("direction");
+                  }}
+                >
+                  スタート(方角)
+                </button>
               </div>
               <div>
                 <span className="label">速度:{settings.perSecond}</span>

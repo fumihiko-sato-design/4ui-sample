@@ -11,11 +11,12 @@ import { directionType } from "../../types/types";
 
 interface ArrowProps {
   direction?: directionType;
+  bearing?: number;
   //   size?: number;
   //   color?: string;
 }
 
-const Arrow: React.FC<ArrowProps> = ({ direction }) => {
+const Arrow: React.FC<ArrowProps> = ({ direction, bearing }) => {
   const getArrowPath = () => {
     switch (direction) {
       case "up":
@@ -38,7 +39,10 @@ const Arrow: React.FC<ArrowProps> = ({ direction }) => {
   };
 
   return (
-    <div className={`${styles.arrow} ${direction ? styles[direction] : ""}`}>
+    <div
+      className={`${styles.arrow} ${direction ? styles[direction] : ""}`}
+      style={{ transform: `rotate(${bearing}deg)` }}
+    >
       {direction !== "loading" ? (
         <img src={getArrowPath()} alt="Arrow" />
       ) : (
