@@ -73,7 +73,7 @@ const Light: React.FC<LightProps> = ({ direction, isNear, naviType }) => {
         // TODO 謎の数値1.14をなんとかする
         const threshold =
           naviType !== "direction" ? Math.PI * 1.14 : Math.PI * 1.37;
-        const space = naviType !== "direction" ? 100 : 120;
+        const space = naviType !== "direction" ? 90 : 120;
         const radian = (i / (lightItemLength - 1)) * r + threshold;
         const left = Math.cos(radian) * space + 52;
         const top = Math.sin(radian) * space + 85;
