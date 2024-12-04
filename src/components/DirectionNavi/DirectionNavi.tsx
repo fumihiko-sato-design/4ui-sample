@@ -19,11 +19,12 @@ const DirectionNavi: React.FC = () => {
       (position) => {
         const { latitude, longitude } = position.coords;
         const bearing = calculateBearing(
-          latitude,
-          longitude,
+          35.66361163957255,
+          139.4163818971592,
           destination.lat,
           destination.lon
         );
+        console.log(latitude, longitude);
         setBearing(bearing);
       },
       (error) => {
