@@ -55,7 +55,7 @@ const DirectionNavi: React.FC = () => {
   // デバイスの向きと目的地の方角の差を計算
   const calculateDirection = () => {
     if (deviceOrientation !== null) {
-      const direction = (deviceOrientation - bearing + 360) % 360;
+      const direction = (bearing - deviceOrientation + 360) % 360;
       return direction;
     }
     return 0;
