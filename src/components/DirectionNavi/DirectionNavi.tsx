@@ -63,7 +63,7 @@ const DirectionNavi: React.FC = () => {
 
   setInterval(() => {
     getPosition();
-  });
+  }, 500);
 
   const direction = calculateDirection();
 
