@@ -67,7 +67,8 @@ const DirectionNavi: React.FC = () => {
     <div className={styles.navi}>
       {deviceOrientation !== null && (
         <div>
-          向き: {bearing}度 | {deviceOrientation}度 | {Math.round(direction)}度
+          bearing: {bearing} | deviceOrientation:{Math.round(deviceOrientation)}
+          | direction:{Math.round(direction)}
         </div>
       )}
       <div
