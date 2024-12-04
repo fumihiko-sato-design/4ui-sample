@@ -7,7 +7,7 @@ import Light from "../Light/Light";
 const DirectionNavi: React.FC = () => {
   const [bearing, setBearing] = useState<number>(0);
   // const destination = { lat: 35.6895, lon: 139.6917 }; // 目的地の緯度経度（例: 東京都庁）
-  const destination = { lat: 35.661149846897835, lon: 139.413975304953 }; // 目的地の緯度経度（例: ちかくのスーパー）
+  const destination = { lat: 35.65069863641416, lon: 139.44693633330428 }; // 目的地の緯度経度（例: ちかくのスーパー）
 
   const [deviceOrientation, setDeviceOrientation] = useState<number | null>(
     null
