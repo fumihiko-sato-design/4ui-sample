@@ -12,7 +12,6 @@ import { directionType } from "../../types/types";
 
 interface ArrowProps {
   direction?: directionType;
-
   //   size?: number;
   //   color?: string;
 }

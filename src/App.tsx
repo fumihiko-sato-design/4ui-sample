@@ -8,12 +8,13 @@ type ScenarioTestType = {
   [key: string]: {
     distance: number;
     direction: string;
+    roadType: string;
     message: string;
     scenario: string;
   }[];
 };
 
-type NaviType = "arrow" | "direction";
+type NaviType = "arrow" | "direction" | "road";
 
 function App() {
   const [settings, setSettings] = useState<{ perSecond: number }>({
@@ -24,13 +25,11 @@ function App() {
   const [naviType, setNaviType] = useState<NaviType>("arrow");
   const [scenarioTest, setScenarioTest] = useState<ScenarioTestType>({});
 
-
   useEffect(() => {
     import("./scenarioTest.json").then((data) => {
       setScenarioTest(data.default);
     });
   }, []);
-
 
   const start = (naviType: NaviType) => {
     setNaviType(naviType);
@@ -44,8 +43,12 @@ function App() {
       <div className="wrapper">
         {isStart && scenarioTest ? (
           <>
-            {naviType === "arrow" ? (
-              <Navi settings={settings} scenarioTest={scenarioTest} />
+            {naviType !== "direction" ? (
+              <Navi
+                settings={settings}
+                scenarioTest={scenarioTest}
+                type={naviType}
+              />
             ) : (
               <DirectionNavi />
             )}
@@ -60,6 +63,13 @@ function App() {
                   }}
                 >
                   スタート
+                </button>
+                <button
+                  onClick={() => {
+                    start("road");
+                  }}
+                >
+                  スタート(道)
                 </button>
                 <button
                   onClick={() => {

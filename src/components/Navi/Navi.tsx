@@ -5,9 +5,11 @@ import styles from "./styles.module.css";
 import { directionType } from "../../types/types";
 import { speech } from "../../utils/speech";
 import pushSound from "../../assets/sounds/push.mp3";
+import ArrowWithRoad from "../ArrowWithLoad/ArrowWithLoad";
 
 type NaviDataType = {
   direction: string;
+  roadType: string;
   message: string;
   date: number;
   spoken: boolean;
@@ -19,6 +21,7 @@ type ScenarioTestType = {
   [key: string]: {
     distance: number;
     direction: string;
+    roadType: string;
     message: string;
     scenario: string;
     delayTime?: number;
@@ -30,10 +33,12 @@ type NaviProps = {
     perSecond: number;
   };
   scenarioTest: ScenarioTestType;
+  type: string;
 };
 
-const Navi: React.FC<NaviProps> = ({ settings, scenarioTest }) => {
+const Navi: React.FC<NaviProps> = ({ settings, scenarioTest, type }) => {
   const [directionData, setDirectionData] = useState<directionType>();
+  const [roadType, setRoadType] = useState<string>();
   const [isNear, setIsNear] = useState(false);
   const [currentTime, setCurrentTime] = useState(Date.now());
   const [currentScenarioKey, setCurrentScenarioKey] = useState("scenario01");
@@ -45,11 +50,11 @@ const Navi: React.FC<NaviProps> = ({ settings, scenarioTest }) => {
   let currentNaviDataIndex = 0;
   let isNearSpoken = false;
 
-  const tick = async() =>  {
+  const tick = async () => {
     if (naviData.length === 0) return;
     const now = Date.now();
     const nextData = naviData[currentNaviDataIndex];
-    if (nextData.date - now < 10 * 1000) {
+    if (nextData.date - now < 5 * 1000) {
       setIsNear(true);
 
       if (
@@ -72,6 +77,7 @@ const Navi: React.FC<NaviProps> = ({ settings, scenarioTest }) => {
       if (data.date < now && !data.spoken) {
         currentNaviDataIndex = i + 1;
         data.spoken = true;
+        console.log(data);
         speak(data);
         setScenarioDataStepIndex(i);
         setIsNear(false);
@@ -86,8 +92,10 @@ const Navi: React.FC<NaviProps> = ({ settings, scenarioTest }) => {
     requestAnimationFrameId = window.requestAnimationFrame(tick);
   };
 
-  const speak = ({ direction, message, delayTime }: NaviDataType) => {
+  const speak = ({ direction, roadType, message, delayTime }: NaviDataType) => {
     setDirectionData(direction as directionType);
+    console.log(direction, roadType);
+    setRoadType(roadType);
     if (direction === "restaurant") {
       playSound();
     }
@@ -117,7 +125,7 @@ const Navi: React.FC<NaviProps> = ({ settings, scenarioTest }) => {
       (step) => step.distance
     );
     return scenarioData[currentScenarioKey].map(
-      ({ direction, message, delayTime, distance }, index) => {
+      ({ direction, roadType, message, delayTime, distance }, index) => {
         const date =
           distances
             .slice(0, index + 1)
@@ -128,6 +136,7 @@ const Navi: React.FC<NaviProps> = ({ settings, scenarioTest }) => {
 
         return {
           direction,
+          roadType,
           message,
           date: currentTime + date * 1000,
           spoken: false,
@@ -140,6 +149,8 @@ const Navi: React.FC<NaviProps> = ({ settings, scenarioTest }) => {
 
   useEffect(() => {
     const data = getNaviData();
+    console.log(data);
+
     setNaviData(data);
   }, [currentScenarioKey]);
 
@@ -155,7 +166,13 @@ const Navi: React.FC<NaviProps> = ({ settings, scenarioTest }) => {
   return (
     <div className={styles.navi}>
       <Light direction={directionData} isNear={isNear} />
-      <Arrow direction={directionData} />
+
+      {type === "arrow" ? (
+        <Arrow direction={directionData} />
+      ) : (
+        <ArrowWithRoad type={roadType} />
+      )}
+
       <button
         className={`${styles.button} ${
           directionData === "restaurant" ? styles.spot : ""

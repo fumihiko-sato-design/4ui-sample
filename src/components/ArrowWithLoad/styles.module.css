@@ -1,0 +1,30 @@
+.arrow {
+  /* background-color: #333333;
+  box-shadow: 0 0 20px 2px #333333; */
+  border: 2px solid #555555;
+  border-radius: 100%;
+  width: 128px;
+  height: 128px;
+}
+
+.restaurant {
+  background-color: var(--spot-color);
+  box-shadow: 0 0 20px 2px var(--spot-color);
+  padding: 10px;
+}
+
+.goal {
+  background-color: var(--goal-color);
+  box-shadow: 0 0 20px 2px var(--goal-color);
+  padding: 10px;
+}
+
+.simpleArrow {
+  background: none;
+  box-shadow: none;
+}
+
+.arrow img {
+  width: 100%;
+  height: 100%;
+}
