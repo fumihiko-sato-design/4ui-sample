@@ -62,22 +62,22 @@ function App() {
                     start("arrow");
                   }}
                 >
-                  スタート
+                  スタート(type1)
                 </button>
                 <button
                   onClick={() => {
                     start("road");
                   }}
                 >
-                  スタート(道)
+                  スタート(type2)
                 </button>
-                <button
+                {/* <button
                   onClick={() => {
                     start("direction");
                   }}
                 >
                   スタート(方角)
-                </button>
+                </button> */}
               </div>
               <div>
                 <span className="label">速度:{settings.perSecond}</span>
